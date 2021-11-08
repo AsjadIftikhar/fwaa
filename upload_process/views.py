@@ -8,8 +8,9 @@ from django.core.files.storage import FileSystemStorage
 
 def homePage(request):
     if request.method == 'POST':
-        uploaded_file = request.FILES['sentFile']  # here you get the files needed
+        uploaded_file = request.FILES.getlist('sentFile')
         fs = FileSystemStorage()
-        fs.save(uploaded_file.name, uploaded_file)
+        for f in uploaded_file:
+            fs.save(f.name, f)
     context = {}
     return render(request, 'home.html', context)
