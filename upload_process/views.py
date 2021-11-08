@@ -1,5 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.core.files.storage import FileSystemStorage
 
 
 # Imaginary function to handle an uploaded file.
@@ -7,8 +8,8 @@ from django.shortcuts import render
 
 def homePage(request):
     if request.method == 'POST':
-        f = request.FILES['sentFile']  # here you get the files needed
-        print(f.name)
-        print(f.size)
+        uploaded_file = request.FILES['sentFile']  # here you get the files needed
+        fs = FileSystemStorage()
+        fs.save(uploaded_file.name, uploaded_file)
     context = {}
     return render(request, 'home.html', context)
