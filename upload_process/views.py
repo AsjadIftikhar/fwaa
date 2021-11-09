@@ -1,6 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
+from upload_process.controller import execute_script
 
 
 # Imaginary function to handle an uploaded file.
@@ -12,5 +13,9 @@ def homePage(request):
         fs = FileSystemStorage()
         for f in uploaded_file:
             fs.save(f.name, f)
+
+        execute_script()
+
+
     context = {}
     return render(request, 'home.html', context)
